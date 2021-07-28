@@ -34,6 +34,8 @@ import '../app_state.dart';
 import '../router/ui_pages.dart';
 
 class Cart extends StatelessWidget {
+  const Cart({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context, listen: false);
@@ -51,7 +53,7 @@ class Cart extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add_shopping_cart_sharp),
             onPressed: () => appState.currentAction =
-                PageAction(state: PageState.addPage, page: CheckoutPageConfig),
+                PageAction(state: PageState.addPage, page: checkoutPageConfig),
           ),
         ],
       ),

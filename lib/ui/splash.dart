@@ -34,9 +34,11 @@ import 'package:provider/provider.dart';
 
 import '../app_state.dart';
 
-const String LoggedInKey = 'LoggedIn';
+const String kLoggedInKey = 'LoggedIn';
 
 class Splash extends StatefulWidget {
+  const Splash({Key key}) : super(key: key);
+
   @override
   _SplashState createState() => _SplashState();
 }
@@ -55,15 +57,11 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Container(
-            child: Image.asset('assets/images/splash.png',
-                width: itemWidth, height: itemHeight),
-          ),
+          child: Image.asset('assets/images/splash.png', width: itemWidth, height: itemHeight),
         ),
       ),
     );
   }
-
 
   @override
   void didChangeDependencies() {

@@ -35,6 +35,8 @@ import '../app_state.dart';
 import '../router/ui_pages.dart';
 
 class Login extends StatefulWidget {
+  const Login({Key key}) : super(key: key);
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -117,7 +119,7 @@ class _LoginState extends State<Login> {
                               color: Theme.of(context).primaryColor),
                         ),
                         onPressed: () {
-                          appState.currentAction = PageAction(state: PageState.addPage, page: CreateAccountPageConfig);
+                          appState.currentAction = PageAction(state: PageState.addPage, page: createAccountPageConfig);
                         },
                         child: const Text(
                           'Create Account',

@@ -32,49 +32,57 @@ import 'package:flutter/cupertino.dart';
 
 import '../app_state.dart';
 
-const String SplashPath = '/splash';
-const String LoginPath = '/login';
-const String CreateAccountPath = '/createAccount';
-const String ListItemsPath = '/listItems';
-const String DetailsPath = '/details';
-const String CartPath = '/cart';
-const String CheckoutPath = '/checkout';
-const String SettingsPath = '/settings';
+const String kSplashPath = '/splash';
+const String kLoginPath = '/login';
+const String kCreateAccountPath = '/createAccount';
+const String kListItemsPath = '/listItems';
+const String kDetailsPath = '/details';
+const String kCartPath = '/cart';
+const String kCheckoutPath = '/checkout';
+const String kSettingsPath = '/settings';
 
 enum Pages {
-  Splash,
-  Login,
-  CreateAccount,
-  List,
-  Details,
-  Cart,
-  Checkout,
-  Settings
+  splash,
+  login,
+  createAccount,
+  list,
+  details,
+  cart,
+  checkout,
+  settings
 }
 
 class PageConfiguration {
+  PageConfiguration(
+      {@required this.key, @required this.path, @required this.uiPage, this.currentPageAction});
+  
   final String key;
   final String path;
   final Pages uiPage;
   PageAction currentPageAction;
 
-  PageConfiguration(
-      {@required this.key, @required this.path, @required this.uiPage, this.currentPageAction});
 }
 
-PageConfiguration SplashPageConfig =
-    PageConfiguration(key: 'Splash', path: SplashPath, uiPage: Pages.Splash, currentPageAction: null);
-PageConfiguration LoginPageConfig =
-    PageConfiguration(key: 'Login', path: LoginPath, uiPage: Pages.Login, currentPageAction: null);
-PageConfiguration CreateAccountPageConfig = PageConfiguration(
-    key: 'CreateAccount', path: CreateAccountPath, uiPage: Pages.CreateAccount, currentPageAction: null);
-PageConfiguration ListItemsPageConfig = PageConfiguration(
-    key: 'ListItems', path: ListItemsPath, uiPage: Pages.List);
-PageConfiguration DetailsPageConfig =
-    PageConfiguration(key: 'Details', path: DetailsPath, uiPage: Pages.Details, currentPageAction: null);
-PageConfiguration CartPageConfig =
-    PageConfiguration(key: 'Cart', path: CartPath, uiPage: Pages.Cart, currentPageAction: null);
-PageConfiguration CheckoutPageConfig = PageConfiguration(
-    key: 'Checkout', path: CheckoutPath, uiPage: Pages.Checkout, currentPageAction: null);
-PageConfiguration SettingsPageConfig = PageConfiguration(
-    key: 'Settings', path: SettingsPath, uiPage: Pages.Settings, currentPageAction: null);
+PageConfiguration splashPageConfig =
+    PageConfiguration(key: 'Splash', path: kSplashPath, uiPage: Pages.splash, currentPageAction: null);
+
+PageConfiguration loginPageConfig =
+    PageConfiguration(key: 'Login', path: kLoginPath, uiPage: Pages.login, currentPageAction: null);
+
+PageConfiguration createAccountPageConfig = PageConfiguration(
+    key: 'CreateAccount', path: kCreateAccountPath, uiPage: Pages.createAccount, currentPageAction: null);
+
+PageConfiguration listItemsPageConfig = PageConfiguration(
+    key: 'ListItems', path: kListItemsPath, uiPage: Pages.list);
+
+PageConfiguration detailsPageConfig =
+    PageConfiguration(key: 'Details', path: kDetailsPath, uiPage: Pages.details, currentPageAction: null);
+
+PageConfiguration cartPageConfig =
+    PageConfiguration(key: 'Cart', path: kCartPath, uiPage: Pages.cart, currentPageAction: null);
+
+PageConfiguration checkoutPageConfig = PageConfiguration(
+    key: 'Checkout', path: kCheckoutPath, uiPage: Pages.checkout, currentPageAction: null);
+
+PageConfiguration settingsPageConfig = PageConfiguration(
+    key: 'Settings', path: kSettingsPath, uiPage: Pages.settings, currentPageAction: null);

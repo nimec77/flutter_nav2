@@ -31,11 +31,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import '../app_state.dart';
-import '../ui/details.dart';
 import '../ui/cart.dart';
 import '../ui/checkout.dart';
 import '../ui/create_account.dart';
+import '../ui/details.dart';
 import '../ui/list_items.dart';
 import '../ui/login.dart';
 import '../ui/settings.dart';
@@ -45,18 +46,16 @@ import 'ui_pages.dart';
 
 class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageConfiguration> {
+  ShoppingRouterDelegate(this.appState) : navigatorKey = GlobalKey() {
+    appState.addListener(notifyListeners);
+  }
+
   final List<Page> _pages = [];
   ShoppingBackButtonDispatcher backButtonDispatcher;
 
   @override
   final GlobalKey<NavigatorState> navigatorKey;
   final AppState appState;
-
-  ShoppingRouterDelegate(this.appState) : navigatorKey = GlobalKey() {
-    appState.addListener(() {
-      notifyListeners();
-    });
-  }
 
   /// Getter for a list that cannot be changed
   List<MaterialPage> get pages => List.unmodifiable(_pages);
@@ -65,8 +64,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   int numPages() => _pages.length;
 
   @override
-  PageConfiguration get currentConfiguration =>
-      _pages.last.arguments as PageConfiguration;
+  PageConfiguration get currentConfiguration => _pages.last.arguments as PageConfiguration;
 
   @override
   Widget build(BuildContext context) {
@@ -116,11 +114,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   MaterialPage _createPage(Widget child, PageConfiguration pageConfig) {
-    return MaterialPage(
-        child: child,
-        key: ValueKey(pageConfig.key),
-        name: pageConfig.path,
-        arguments: pageConfig);
+    return MaterialPage(child: child, key: ValueKey(pageConfig.key), name: pageConfig.path, arguments: pageConfig);
   }
 
   void _addPageData(Widget child, PageConfiguration pageConfig) {
@@ -130,33 +124,31 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   void addPage(PageConfiguration pageConfig) {
-    final shouldAddPage = _pages.isEmpty ||
-        (_pages.last.arguments as PageConfiguration).uiPage !=
-            pageConfig.uiPage;
+    final shouldAddPage = _pages.isEmpty || (_pages.last.arguments as PageConfiguration).uiPage != pageConfig.uiPage;
     if (shouldAddPage) {
       switch (pageConfig.uiPage) {
-        case Pages.Splash:
-          _addPageData(Splash(), SplashPageConfig);
+        case Pages.splash:
+          _addPageData(const Splash(), splashPageConfig);
           break;
-        case Pages.Login:
-          _addPageData(Login(), LoginPageConfig);
+        case Pages.login:
+          _addPageData(const Login(), loginPageConfig);
           break;
-        case Pages.CreateAccount:
-          _addPageData(CreateAccount(), CreateAccountPageConfig);
+        case Pages.createAccount:
+          _addPageData(const CreateAccount(), createAccountPageConfig);
           break;
-        case Pages.List:
-          _addPageData(ListItems(), ListItemsPageConfig);
+        case Pages.list:
+          _addPageData(const ListItems(), listItemsPageConfig);
           break;
-        case Pages.Cart:
-          _addPageData(Cart(), CartPageConfig);
+        case Pages.cart:
+          _addPageData(const Cart(), cartPageConfig);
           break;
-        case Pages.Checkout:
-          _addPageData(Checkout(), CheckoutPageConfig);
+        case Pages.checkout:
+          _addPageData(const Checkout(), checkoutPageConfig);
           break;
-        case Pages.Settings:
-          _addPageData(Settings(), SettingsPageConfig);
+        case Pages.settings:
+          _addPageData(const Settings(), settingsPageConfig);
           break;
-        case Pages.Details:
+        case Pages.details:
           if (pageConfig.currentPageAction != null) {
             _addPageData(pageConfig.currentPageAction.widget, pageConfig);
           }
@@ -175,8 +167,9 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   void setPath(List<MaterialPage> path) {
-    _pages.clear();
-    _pages.addAll(path);
+    _pages
+      ..clear()
+      ..addAll(path);
   }
 
   void replaceAll(PageConfiguration newRoute) {
@@ -193,16 +186,14 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
 
   void addAll(List<PageConfiguration> routes) {
     _pages.clear();
-    routes.forEach((route) {
+    for (final route in routes) {
       addPage(route);
-    });
+    }
   }
 
   @override
   Future<void> setNewRoutePath(PageConfiguration configuration) {
-    final shouldAddPage = _pages.isEmpty ||
-        (_pages.last.arguments as PageConfiguration).uiPage !=
-            configuration.uiPage;
+    final shouldAddPage = _pages.isEmpty || (_pages.last.arguments as PageConfiguration).uiPage != configuration.uiPage;
     if (shouldAddPage) {
       _pages.clear();
       addPage(configuration);
@@ -212,29 +203,29 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
 
   void _setPageAction(PageAction action) {
     switch (action.page.uiPage) {
-      case Pages.Splash:
-        SplashPageConfig.currentPageAction = action;
+      case Pages.splash:
+        splashPageConfig.currentPageAction = action;
         break;
-      case Pages.Login:
-        LoginPageConfig.currentPageAction = action;
+      case Pages.login:
+        loginPageConfig.currentPageAction = action;
         break;
-      case Pages.CreateAccount:
-        CreateAccountPageConfig.currentPageAction = action;
+      case Pages.createAccount:
+        createAccountPageConfig.currentPageAction = action;
         break;
-      case Pages.List:
-        ListItemsPageConfig.currentPageAction = action;
+      case Pages.list:
+        listItemsPageConfig.currentPageAction = action;
         break;
-      case Pages.Cart:
-        CartPageConfig.currentPageAction = action;
+      case Pages.cart:
+        cartPageConfig.currentPageAction = action;
         break;
-      case Pages.Checkout:
-        CheckoutPageConfig.currentPageAction = action;
+      case Pages.checkout:
+        checkoutPageConfig.currentPageAction = action;
         break;
-      case Pages.Settings:
-        SettingsPageConfig.currentPageAction = action;
+      case Pages.settings:
+        settingsPageConfig.currentPageAction = action;
         break;
-      case Pages.Details:
-        DetailsPageConfig.currentPageAction = action;
+      case Pages.details:
+        detailsPageConfig.currentPageAction = action;
         break;
       default:
         break;
@@ -243,7 +234,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
 
   List<Page> buildPages() {
     if (!appState.splashFinished) {
-      replaceAll(SplashPageConfig);
+      replaceAll(splashPageConfig);
     } else {
       switch (appState.currentAction.state) {
         case PageState.none:
@@ -276,53 +267,45 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     return List.of(_pages);
   }
 
-
   void parseRoute(Uri uri) {
     if (uri.pathSegments.isEmpty) {
-      setNewRoutePath(SplashPageConfig);
+      setNewRoutePath(splashPageConfig);
       return;
     }
 
     // Handle navapp://deeplinks/details/#
     if (uri.pathSegments.length == 2) {
       if (uri.pathSegments[0] == 'details') {
-        pushWidget(Details(int.parse(uri.pathSegments[1])), DetailsPageConfig);
+        pushWidget(Details(id: int.parse(uri.pathSegments[1])), detailsPageConfig);
       }
     } else if (uri.pathSegments.length == 1) {
       final path = uri.pathSegments[0];
       switch (path) {
         case 'splash':
-          replaceAll(SplashPageConfig);
+          replaceAll(splashPageConfig);
           break;
         case 'login':
-          replaceAll(LoginPageConfig);
+          replaceAll(loginPageConfig);
           break;
         case 'createAccount':
           setPath([
-            _createPage(Login(), LoginPageConfig),
-            _createPage(CreateAccount(), CreateAccountPageConfig)
+            _createPage(const Login(), loginPageConfig),
+            _createPage(const CreateAccount(), createAccountPageConfig)
           ]);
           break;
         case 'listItems':
-          replaceAll(ListItemsPageConfig);
+          replaceAll(listItemsPageConfig);
           break;
         case 'cart':
-          setPath([
-            _createPage(ListItems(), ListItemsPageConfig),
-            _createPage(Cart(), CartPageConfig)
-          ]);
+          setPath([_createPage(const ListItems(), listItemsPageConfig), _createPage(const Cart(), cartPageConfig)]);
           break;
         case 'checkout':
-          setPath([
-            _createPage(ListItems(), ListItemsPageConfig),
-            _createPage(Checkout(), CheckoutPageConfig)
-          ]);
+          setPath(
+              [_createPage(const ListItems(), listItemsPageConfig), _createPage(const Checkout(), checkoutPageConfig)]);
           break;
         case 'settings':
-          setPath([
-            _createPage(ListItems(), ListItemsPageConfig),
-            _createPage(Settings(), SettingsPageConfig)
-          ]);
+          setPath(
+              [_createPage(const ListItems(), listItemsPageConfig), _createPage(const Settings(), settingsPageConfig)]);
           break;
       }
     }

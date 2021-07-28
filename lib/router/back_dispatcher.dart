@@ -31,10 +31,11 @@ import 'package:flutter/material.dart';
 import 'router_delegate.dart';
 
 class ShoppingBackButtonDispatcher extends RootBackButtonDispatcher {
-  final ShoppingRouterDelegate _routerDelegate;
-
   ShoppingBackButtonDispatcher(this._routerDelegate)
       : super();
+
+  final ShoppingRouterDelegate _routerDelegate;
+
 
   @override
   Future<bool> didPopRoute() {

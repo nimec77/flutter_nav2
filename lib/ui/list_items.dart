@@ -35,6 +35,8 @@ import '../router/ui_pages.dart';
 import 'details.dart';
 
 class ListItems extends StatelessWidget {
+  const ListItems({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context, listen: false);
@@ -45,19 +47,16 @@ class ListItems extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
         title: const Text(
           'Items for sale',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () => appState.currentAction =
-                PageAction(state: PageState.addPage, page: SettingsPageConfig),
+            onPressed: () => appState.currentAction = PageAction(state: PageState.addPage, page: settingsPageConfig),
           ),
           IconButton(
             icon: const Icon(Icons.add_shopping_cart_sharp),
-            onPressed: () => appState.currentAction =
-                PageAction(state: PageState.addPage, page: CheckoutPageConfig),
+            onPressed: () => appState.currentAction = PageAction(state: PageState.addPage, page: checkoutPageConfig),
           )
         ],
       ),
@@ -66,12 +65,10 @@ class ListItems extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text('${items[index]}'),
+              title: Text(items[index]),
               onTap: () {
-                appState.currentAction = PageAction(
-                    state: PageState.addWidget,
-                    widget: Details(index),
-                    page: DetailsPageConfig);
+                appState.currentAction =
+                    PageAction(state: PageState.addWidget, widget: Details(id: index), page: detailsPageConfig);
               },
             );
           },

@@ -39,25 +39,28 @@ import 'router/shopping_parser.dart';
 import 'router/ui_pages.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  _MyAppState() {
+    delegate = ShoppingRouterDelegate(appState);
+    delegate.setNewRoutePath(splashPageConfig);
+    backButtonDispatcher = ShoppingBackButtonDispatcher(delegate);
+  }
+
   final appState = AppState();
   ShoppingRouterDelegate delegate;
   final parser = ShoppingParser();
   ShoppingBackButtonDispatcher backButtonDispatcher;
 
-  _MyAppState() {
-    delegate = ShoppingRouterDelegate(appState);
-    delegate.setNewRoutePath(SplashPageConfig);
-    backButtonDispatcher = ShoppingBackButtonDispatcher(delegate);
-  }
 
   @override
   void initState() {

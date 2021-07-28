@@ -36,52 +36,52 @@ class ShoppingParser extends RouteInformationParser<PageConfiguration> {
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location);
     if (uri.pathSegments.isEmpty) {
-      return SplashPageConfig;
+      return splashPageConfig;
     }
 
-    final path = '/' + uri.pathSegments[0];
+    final path = '/${uri.pathSegments[0]}';
     switch (path) {
-      case SplashPath:
-        return SplashPageConfig;
-      case LoginPath:
-        return LoginPageConfig;
-      case CreateAccountPath:
-        return CreateAccountPageConfig;
-      case ListItemsPath:
-        return ListItemsPageConfig;
-      case DetailsPath:
-        return DetailsPageConfig;
-      case CartPath:
-        return CartPageConfig;
-      case CheckoutPath:
-        return CheckoutPageConfig;
-      case SettingsPath:
-        return SettingsPageConfig;
+      case kSplashPath:
+        return splashPageConfig;
+      case kLoginPath:
+        return loginPageConfig;
+      case kCreateAccountPath:
+        return createAccountPageConfig;
+      case kListItemsPath:
+        return listItemsPageConfig;
+      case kDetailsPath:
+        return detailsPageConfig;
+      case kCartPath:
+        return cartPageConfig;
+      case kCheckoutPath:
+        return checkoutPageConfig;
+      case kSettingsPath:
+        return settingsPageConfig;
       default:
-        return SplashPageConfig;
+        return splashPageConfig;
     }
   }
 
   @override
   RouteInformation restoreRouteInformation(PageConfiguration configuration) {
     switch (configuration.uiPage) {
-      case Pages.Splash:
-        return const RouteInformation(location: SplashPath);
-      case Pages.Login:
-        return const RouteInformation(location: LoginPath);
-      case Pages.CreateAccount:
-        return const RouteInformation(location: CreateAccountPath);
-      case Pages.List:
-        return const RouteInformation(location: ListItemsPath);
-      case Pages.Details:
-        return const RouteInformation(location: DetailsPath);
-      case Pages.Cart:
-        return const RouteInformation(location: CartPath);
-      case Pages.Checkout:
-        return const RouteInformation(location: CheckoutPath);
-      case Pages.Settings:
-        return const RouteInformation(location: SettingsPath);
-      default: return const RouteInformation(location: SplashPath);
+      case Pages.splash:
+        return const RouteInformation(location: kSplashPath);
+      case Pages.login:
+        return const RouteInformation(location: kLoginPath);
+      case Pages.createAccount:
+        return const RouteInformation(location: kCreateAccountPath);
+      case Pages.list:
+        return const RouteInformation(location: kListItemsPath);
+      case Pages.details:
+        return const RouteInformation(location: kDetailsPath);
+      case Pages.cart:
+        return const RouteInformation(location: kCartPath);
+      case Pages.checkout:
+        return const RouteInformation(location: kCheckoutPath);
+      case Pages.settings:
+        return const RouteInformation(location: kSettingsPath);
+      default: return const RouteInformation(location: kSplashPath);
 
     }
   }

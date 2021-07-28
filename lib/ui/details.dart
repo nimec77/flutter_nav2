@@ -33,9 +33,9 @@ import '../app_state.dart';
 import '../router/ui_pages.dart';
 
 class Details extends StatelessWidget {
-  final int id;
+  const Details({Key key, @required this.id}) : super(key: key);
 
-  const Details(this.id);
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,7 @@ class Details extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
         title: Text(
           'Item $id',
-          style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
       body: SafeArea(
@@ -57,14 +56,16 @@ class Details extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  appState.addToCart('Item $id');
-                  appState.currentAction = PageAction(state: PageState.pop);
+                  appState..addToCart('Item $id')
+                  ..currentAction = PageAction(state: PageState.pop);
                 },
                 child: const Text('Add to Cart'),
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(
+                height: 16,
+              ),
               ElevatedButton(
-                onPressed: () => appState.currentAction = PageAction(state: PageState.addPage, page: CartPageConfig),
+                onPressed: () => appState.currentAction = PageAction(state: PageState.addPage, page: cartPageConfig),
                 child: const Text('Cart'),
               ),
             ],
