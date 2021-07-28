@@ -33,15 +33,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
-import '../ui/cart.dart';
-import '../ui/checkout.dart';
-import '../ui/create_account.dart';
-import '../ui/details.dart';
-import '../ui/list_items.dart';
-import '../ui/login.dart';
-import '../ui/settings.dart';
-import '../ui/splash.dart';
-import 'back_dispatcher.dart';
+import '../ui/ui.dart';
 import 'ui_pages.dart';
 
 class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
@@ -51,10 +43,10 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   final List<Page> _pages = [];
-  ShoppingBackButtonDispatcher backButtonDispatcher;
 
   @override
   final GlobalKey<NavigatorState> navigatorKey;
+
   final AppState appState;
 
   /// Getter for a list that cannot be changed
@@ -64,7 +56,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   int numPages() => _pages.length;
 
   @override
-  PageConfiguration get currentConfiguration => _pages.last.arguments as PageConfiguration;
+  PageConfiguration? get currentConfiguration => _pages.isNotEmpty ? _pages.last.arguments as PageConfiguration : null;
 
   @override
   Widget build(BuildContext context) {
@@ -83,20 +75,17 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     if (canPop()) {
       pop();
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   void _removePage(MaterialPage page) {
-    if (page != null) {
-      _pages.remove(page);
-    }
+    _pages.remove(page);
   }
 
   void pop() {
     if (canPop()) {
-      _removePage(_pages.last);
+      _removePage(_pages.last as MaterialPage<dynamic>);
     }
   }
 
@@ -105,12 +94,12 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   @override
-  Future<bool> popRoute() {
+  Future<bool> popRoute() async {
     if (canPop()) {
-      _removePage(_pages.last);
-      return Future.value(true);
+      _removePage(_pages.last as MaterialPage<dynamic>);
+      return true;
     }
-    return Future.value(false);
+    return false;
   }
 
   MaterialPage _createPage(Widget child, PageConfiguration pageConfig) {
@@ -150,7 +139,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
           break;
         case Pages.details:
           if (pageConfig.currentPageAction != null) {
-            _addPageData(pageConfig.currentPageAction.widget, pageConfig);
+            _addPageData(pageConfig.currentPageAction!.widget!, pageConfig);
           }
           break;
         default:
@@ -192,17 +181,16 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   @override
-  Future<void> setNewRoutePath(PageConfiguration configuration) {
+  Future<void> setNewRoutePath(PageConfiguration configuration) async {
     final shouldAddPage = _pages.isEmpty || (_pages.last.arguments as PageConfiguration).uiPage != configuration.uiPage;
     if (shouldAddPage) {
       _pages.clear();
       addPage(configuration);
     }
-    return SynchronousFuture(null);
   }
 
   void _setPageAction(PageAction action) {
-    switch (action.page.uiPage) {
+    switch (action.page!.uiPage) {
       case Pages.splash:
         splashPageConfig.currentPageAction = action;
         break;
@@ -241,25 +229,25 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
           break;
         case PageState.addPage:
           _setPageAction(appState.currentAction);
-          addPage(appState.currentAction.page);
+          addPage(appState.currentAction.page!);
           break;
         case PageState.pop:
           pop();
           break;
         case PageState.replace:
           _setPageAction(appState.currentAction);
-          replace(appState.currentAction.page);
+          replace(appState.currentAction.page!);
           break;
         case PageState.replaceAll:
           _setPageAction(appState.currentAction);
-          replaceAll(appState.currentAction.page);
+          replaceAll(appState.currentAction.page!);
           break;
         case PageState.addWidget:
           _setPageAction(appState.currentAction);
-          pushWidget(appState.currentAction.widget, appState.currentAction.page);
+          pushWidget(appState.currentAction.widget!, appState.currentAction.page!);
           break;
         case PageState.addAll:
-          addAll(appState.currentAction.pages);
+          addAll(appState.currentAction.pages!);
           break;
       }
     }

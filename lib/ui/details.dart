@@ -33,7 +33,7 @@ import '../app_state.dart';
 import '../router/ui_pages.dart';
 
 class Details extends StatelessWidget {
-  const Details({Key key, @required this.id}) : super(key: key);
+  const Details({Key? key, required this.id}) : super(key: key);
 
   final int id;
 

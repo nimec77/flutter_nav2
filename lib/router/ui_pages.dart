@@ -28,8 +28,6 @@
  * THE SOFTWARE.
  */
 
-import 'package:flutter/cupertino.dart';
-
 import '../app_state.dart';
 
 const String kSplashPath = '/splash';
@@ -54,35 +52,35 @@ enum Pages {
 
 class PageConfiguration {
   PageConfiguration(
-      {@required this.key, @required this.path, @required this.uiPage, this.currentPageAction});
+      {required this.key, required this.path, required this.uiPage, this.currentPageAction});
   
   final String key;
   final String path;
   final Pages uiPage;
-  PageAction currentPageAction;
+  PageAction? currentPageAction;
 
 }
 
 PageConfiguration splashPageConfig =
-    PageConfiguration(key: 'Splash', path: kSplashPath, uiPage: Pages.splash, currentPageAction: null);
+    PageConfiguration(key: 'Splash', path: kSplashPath, uiPage: Pages.splash);
 
 PageConfiguration loginPageConfig =
-    PageConfiguration(key: 'Login', path: kLoginPath, uiPage: Pages.login, currentPageAction: null);
+    PageConfiguration(key: 'Login', path: kLoginPath, uiPage: Pages.login);
 
 PageConfiguration createAccountPageConfig = PageConfiguration(
-    key: 'CreateAccount', path: kCreateAccountPath, uiPage: Pages.createAccount, currentPageAction: null);
+    key: 'CreateAccount', path: kCreateAccountPath, uiPage: Pages.createAccount);
 
 PageConfiguration listItemsPageConfig = PageConfiguration(
     key: 'ListItems', path: kListItemsPath, uiPage: Pages.list);
 
 PageConfiguration detailsPageConfig =
-    PageConfiguration(key: 'Details', path: kDetailsPath, uiPage: Pages.details, currentPageAction: null);
+    PageConfiguration(key: 'Details', path: kDetailsPath, uiPage: Pages.details);
 
 PageConfiguration cartPageConfig =
-    PageConfiguration(key: 'Cart', path: kCartPath, uiPage: Pages.cart, currentPageAction: null);
+    PageConfiguration(key: 'Cart', path: kCartPath, uiPage: Pages.cart);
 
 PageConfiguration checkoutPageConfig = PageConfiguration(
-    key: 'Checkout', path: kCheckoutPath, uiPage: Pages.checkout, currentPageAction: null);
+    key: 'Checkout', path: kCheckoutPath, uiPage: Pages.checkout);
 
 PageConfiguration settingsPageConfig = PageConfiguration(
-    key: 'Settings', path: kSettingsPath, uiPage: Pages.settings, currentPageAction: null);
+    key: 'Settings', path: kSettingsPath, uiPage: Pages.settings);

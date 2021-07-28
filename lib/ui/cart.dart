@@ -34,7 +34,7 @@ import '../app_state.dart';
 import '../router/ui_pages.dart';
 
 class Cart extends StatelessWidget {
-  const Cart({Key key}) : super(key: key);
+  const Cart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,12 @@ class Cart extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
         title: const Text(
           'Cart',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_shopping_cart_sharp),
-            onPressed: () => appState.currentAction =
-                PageAction(state: PageState.addPage, page: checkoutPageConfig),
+            onPressed: () => appState.currentAction = PageAction(state: PageState.addPage, page: checkoutPageConfig),
           ),
         ],
       ),

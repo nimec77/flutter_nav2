@@ -20,9 +20,9 @@ class PageAction {
   PageAction({this.state = PageState.none, this.page, this.pages, this.widget});
 
   PageState state;
-  PageConfiguration page;
-  List<PageConfiguration> pages;
-  Widget widget;
+  PageConfiguration? page;
+  List<PageConfiguration>? pages;
+  Widget? widget;
 
 }
 class AppState extends ChangeNotifier {
@@ -35,8 +35,8 @@ class AppState extends ChangeNotifier {
   bool _splashFinished = false;
   bool get splashFinished => _splashFinished;
   final cartItems = [];
-  String emailAddress;
-  String password;
+  String? emailAddress;
+  String? password;
   PageAction _currentAction = PageAction();
   PageAction get currentAction => _currentAction;
   set currentAction(PageAction action) {
